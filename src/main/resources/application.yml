@@ -1,0 +1,43 @@
+logging:
+  level:
+    root: info
+    org.axonframework: trace
+    org.springframework: debug
+    org.apache.http: info
+    org.hibernate: info
+    com.zaxxer.hikari: info
+    com.zaxxer.hikari.HikariConfig: debug
+
+spring:
+  datasource:
+    hikari:
+      axon-aohi:
+        jdbc-url: jdbc:postgresql://localhost:5432/postgres
+        username: user
+        password: password
+        driverClassName: org.postgresql.Driver
+        pool-name: hikari-pool-axon
+      integration-aohi:
+        jdbc-url: jdbc:postgresql://localhost:5432/integration
+        username: user
+        password: password
+        driverClassName: org.postgresql.Driver
+        pool-name: hikari-pool-integration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: nl.uva.doubledatasourceaxon.config.axon.AxonPostgreSQLDialect
+        generate_statistics: false
+
+#debug: true
+
+axon:
+  serializer.general: jackson
+  eventhandling.processors:
+    some-service-pgroup:
+      mode: pooled
+      thread-count: 6
+      initial-segment-count: 4
